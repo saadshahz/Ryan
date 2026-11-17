@@ -8277,3 +8277,14 @@ ol.bd-list li::before {
     padding-inline: 18px;
   }
 }
+
+/* Site-wide 404 page (reuses the project "not found" layout). */
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+.not-found-actions .button {
+  margin-top: 0;
+}

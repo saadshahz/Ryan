@@ -1,1 +1,14 @@
-{}
+{
+  "title": "Ryan Group | Construction & Property Development",
+  "description": "Ryan Group builds enduring spaces through thoughtful construction, quality craftsmanship, and a vision for tomorrow. Explore our projects, expertise, and insights.",
+  "language": "en",
+  "robots": {
+    "index": true
+  },
+  "openGraph": {
+    "image": "https://images.unsplash.com/photo-1757356657991-c3fd6e2e812e?auto=format&fit=crop&w=1200&h=630&q=85"
+  },
+  "accessibility": {
+    "addBypassLinks": true
+  }
+}

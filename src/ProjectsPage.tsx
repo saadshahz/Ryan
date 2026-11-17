@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { site } from "./siteConfig";
 import { fitWidth } from "./responsiveImage";
-import { PageHeader } from "./PageChrome";
+import { PageFooter, PageHeader } from "./PageChrome";
 import FeaturedProjectsCarousel from "./FeaturedProjectsCarousel";
 
 const portfolioImages = {
@@ -11,14 +12,6 @@ const portfolioImages = {
     fitWidth("https://images.unsplash.com/photo-1757359056339-22968344cce6?auto=format&fit=crop&w=2200&q=90"),
 };
 
-const projectsNav = [
-  ["Home", "/"],
-  ["About Us", "/about"],
-  ["Projects", "/projects"],
-  ["Blog", "/blog"],
-  ["Contacts", "/contacts"],
-];
-
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="icon">
@@ -28,25 +21,6 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
         strokeWidth="1.5"
       />
     </svg>
-  );
-}
-
-function Logo({ dark = false }: { dark?: boolean }) {
-  return (
-    <a
-      href="/"
-      className={`logo ${dark ? "logo-dark" : ""}`}
-      aria-label="Ryan Group home"
-    >
-      <span className="logo-mark">
-        <span>R</span>
-        <i />
-      </span>
-      <span className="logo-copy">
-        <strong>RYAN</strong>
-        <small>GROUP</small>
-      </span>
-    </a>
   );
 }
 
@@ -232,7 +206,7 @@ function ProjectsPage() {
             <p>Let&apos;s create something meaningful together.</p>
             <div className="contact-actions">
               <a
-                href="mailto:hello@ryangroup.example"
+                href={`mailto:${site.email}`}
                 className="button golden-button"
               >
                 Discuss a Project <Arrow />
@@ -245,81 +219,7 @@ function ProjectsPage() {
         </section>
       </main>
 
-      <footer>
-        <div className="container footer-grid">
-          <div className="footer-brand">
-            <Logo />
-            <p>
-              Building enduring spaces through integrity, thoughtful design, and
-              uncompromising quality.
-            </p>
-            <div className="socials">
-              <a
-                href="https://www.linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-              >
-                in
-              </a>
-              <a
-                href="https://www.instagram.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Instagram"
-              >
-                ig
-              </a>
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Facebook"
-              >
-                f
-              </a>
-            </div>
-          </div>
-          <div className="footer-column">
-            <h3>Quick Links</h3>
-            {projectsNav.slice(0, 5).map(([label, href]) => (
-              <a key={label} href={href}>
-                {label}
-              </a>
-            ))}
-          </div>
-          <div className="footer-column">
-            <h3>Our Businesses</h3>
-            <a href="/construction">Construction</a>
-            <a href="/about#business-verticals">
-              PG Accommodation <small>Soon</small>
-            </a>
-            <a href="/about#business-verticals">
-              Real Estate <small>Soon</small>
-            </a>
-          </div>
-          <div className="footer-column contact-details">
-            <h3>Get in Touch</h3>
-            <a href="mailto:hello@ryangroup.example">hello@ryangroup.example</a>
-            <a href="tel:+919800000000">+91 98000 00000</a>
-            <p>
-              Ryan House, Business District,
-              <br />
-              Mumbai, India 400001
-            </p>
-          </div>
-        </div>
-        <div className="container footer-bottom">
-          <p>© 2025 Ryan Group. All rights reserved.</p>
-          <div>
-            <span>Privacy Policy</span>
-            <span>Terms</span>
-          </div>
-          <a href="#projects-top" className="back-top">
-            Back to top <span>↑</span>
-          </a>
-        </div>
-      </footer>
+      <PageFooter topId="projects-top" />
     </div>
   );
 }

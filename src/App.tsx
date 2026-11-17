@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { site } from "./siteConfig";
 import { fitWidth } from "./responsiveImage";
-import { PageHeader } from "./PageChrome";
+import { PageFooter, PageHeader } from "./PageChrome";
 import AboutPage from "./AboutPage";
 import ConstructionPage from "./ConstructionPage";
 import ProjectsPage from "./ProjectsPage";
@@ -8,6 +9,7 @@ import ProjectDetailPage from "./ProjectDetailPage";
 import BlogPage from "./BlogPage";
 import BlogArticlePage from "./BlogArticlePage";
 import ContactsPage from "./ContactsPage";
+import NotFoundPage from "./NotFoundPage";
 import FeaturedProjectsCarousel from "./FeaturedProjectsCarousel";
 import HomeStories from "./HomeStories";
 
@@ -24,14 +26,6 @@ const images = {
     fitWidth("https://images.unsplash.com/photo-1624204386084-dd8c05e32226?auto=format&fit=crop&w=2200&q=90"),
 };
 
-const navItems = [
-  ["Home", "/"],
-  ["About Us", "/about"],
-  ["Projects", "/projects"],
-  ["Blog", "/blog"],
-  ["Contacts", "/contacts"],
-];
-
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="icon">
@@ -41,21 +35,6 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
         strokeWidth="1.5"
       />
     </svg>
-  );
-}
-
-function Logo({ dark = false }: { dark?: boolean }) {
-  return (
-    <a href="#home" className={`logo ${dark ? "logo-dark" : ""}`} aria-label="Ryan Group home">
-      <span className="logo-mark">
-        <span>R</span>
-        <i />
-      </span>
-      <span className="logo-copy">
-        <strong>RYAN</strong>
-        <small>GROUP</small>
-      </span>
-    </a>
   );
 }
 
@@ -113,6 +92,11 @@ function App() {
 
   if (window.location.pathname === "/about" || window.location.pathname === "/about/") {
     return <AboutPage />;
+  }
+
+  // Anything that is not the homepage or a route above is a 404.
+  if (!["/", "/index.html"].includes(window.location.pathname)) {
+    return <NotFoundPage />;
   }
 
 
@@ -308,7 +292,7 @@ function App() {
               <a href="/contacts" className="button golden-button">
                 Get in Touch <Arrow />
               </a>
-              <a href="tel:+919800000000" className="button button-outline">
+              <a href={`tel:${site.phone.tel}`} className="button button-outline">
                 Discuss a Project <Arrow diagonal />
               </a>
             </div>
@@ -316,81 +300,7 @@ function App() {
         </section>
       </main>
 
-      <footer>
-        <div className="container footer-grid">
-          <div className="footer-brand">
-            <Logo />
-            <p>
-              Building enduring spaces through integrity, thoughtful design, and uncompromising
-              quality.
-            </p>
-            <div className="socials">
-              <a
-                href="https://www.linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-              >
-                in
-              </a>
-              <a
-                href="https://www.instagram.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Instagram"
-              >
-                ig
-              </a>
-              <a
-                href="https://www.facebook.com"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Facebook"
-              >
-                f
-              </a>
-            </div>
-          </div>
-          <div className="footer-column">
-            <h3>Quick Links</h3>
-            {navItems.map(([label, href]) => (
-              <a key={href} href={href}>
-                {label}
-              </a>
-            ))}
-          </div>
-          <div className="footer-column">
-            <h3>Our Businesses</h3>
-            <a href="/construction">Construction</a>
-            <a href="/about#business-verticals">
-              PG Accommodation <small>Soon</small>
-            </a>
-            <a href="/about#business-verticals">
-              Real Estate <small>Soon</small>
-            </a>
-          </div>
-          <div className="footer-column contact-details">
-            <h3>Get in Touch</h3>
-            <a href="mailto:hello@ryangroup.example">hello@ryangroup.example</a>
-            <a href="tel:+919800000000">+91 98000 00000</a>
-            <p>
-              Ryan House, Business District,
-              <br />
-              Mumbai, India 400001
-            </p>
-          </div>
-        </div>
-        <div className="container footer-bottom">
-          <p>© 2025 Ryan Group. All rights reserved.</p>
-          <div>
-            <span>Privacy Policy</span>
-            <span>Terms</span>
-          </div>
-          <a href="#home" className="back-top">
-            Back to top <span>↑</span>
-          </a>
-        </div>
-      </footer>
+      <PageFooter topId="home" />
     </div>
   );
 }

@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from "react";
+import { Fragment, useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from "react";
+import { site } from "./siteConfig";
 
 const navigation = [
   ["Home", "/"],
@@ -176,7 +177,7 @@ export function PageFooter({ topId }: { topId: string }) {
           </p>
           <div className="socials">
             <a
-              href="https://www.linkedin.com"
+              href={site.socials.linkedin}
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
@@ -184,7 +185,7 @@ export function PageFooter({ topId }: { topId: string }) {
               in
             </a>
             <a
-              href="https://www.instagram.com"
+              href={site.socials.instagram}
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
@@ -192,7 +193,7 @@ export function PageFooter({ topId }: { topId: string }) {
               ig
             </a>
             <a
-              href="https://www.facebook.com"
+              href={site.socials.facebook}
               target="_blank"
               rel="noreferrer"
               aria-label="Facebook"
@@ -221,17 +222,22 @@ export function PageFooter({ topId }: { topId: string }) {
         </div>
         <div className="footer-column contact-details">
           <h3>Get in Touch</h3>
-          <a href="mailto:hello@ryangroup.example">hello@ryangroup.example</a>
-          <a href="tel:+919800000000">+91 98000 00000</a>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <a href={`tel:${site.phone.tel}`}>{site.phone.display}</a>
           <p>
-            Ryan House, Business District,
-            <br />
-            Mumbai, India 400001
+            {site.address.map((line, index) => (
+              <Fragment key={line}>
+                {index > 0 && <br />}
+                {line}
+              </Fragment>
+            ))}
           </p>
         </div>
       </div>
       <div className="container footer-bottom">
-        <p>© 2025 Ryan Group. All rights reserved.</p>
+        <p>
+          © {new Date().getFullYear()} {site.name}. All rights reserved.
+        </p>
         <div>
           <span>Privacy Policy</span>
           <span>Terms</span>

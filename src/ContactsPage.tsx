@@ -1,12 +1,10 @@
 import { useEffect, useRef, type ReactNode } from "react";
+import { site } from "./siteConfig";
 import EnquiryForm, { CONTACT_EMAIL, type EnquiryFormHandle, type Topic } from "./EnquiryForm";
 import { Arrow, PageFooter, PageHeader, RevealPage } from "./PageChrome";
 
-/*
- * Placeholder contact details: the same dummy values used across the site.
- * Replace with Ryan Group's verified email and phone before launch.
- */
-const CONTACT_PHONE = "+919800000000";
+/* Contact details come from src/siteConfig.ts. */
+const CONTACT_PHONE = site.phone.tel;
 
 const unsplash = (id: string, width: number) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${width}&q=86`;

@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react";
+import { site } from "./siteConfig";
 import { MessageCircle } from "lucide-react";
 
-/**
- * Ryan Group's WhatsApp number in international format, digits only, no "+" or spaces
- * (for example "919876543210" for +91 98765 43210).
- *
- * NOT CONFIGURED: the project contains no verified WhatsApp number (the footer number is a
- * placeholder). Until a real number is set here, the button links to the Contact page enquiry
- * form instead of opening a WhatsApp chat.
- */
-export const WHATSAPP_NUMBER: string | null = null;
+/** Set the number in src/siteConfig.ts (`whatsappNumber`). While it is null, the button
+ * links to the Contact page enquiry form instead of WhatsApp. */
+export const WHATSAPP_NUMBER = site.whatsappNumber;
 
 export const WHATSAPP_MESSAGE =
   "Hello Ryan Group, I would like to know more about your projects and services.";

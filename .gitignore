@@ -19,3 +19,6 @@ logs/
 # beside it.
 /.plugins/
 /.opencode-skills/
+
+# Uncompressed source footage (the web-optimised copy lives in public/).
+/source-media/

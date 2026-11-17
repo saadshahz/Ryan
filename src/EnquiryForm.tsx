@@ -9,14 +9,13 @@ import {
 } from "react";
 import { Arrow } from "./PageChrome";
 import { markEnquiryEngaged } from "./enquirySession";
+import { site } from "./siteConfig";
 
 /*
  * Shared enquiry form, used on the Contact page and in the site-wide enquiry popup.
- *
- * Placeholder contact email: the same dummy value used across the site.
- * Replace with Ryan Group's verified address before launch.
+ * The recipient address comes from src/siteConfig.ts.
  */
-export const CONTACT_EMAIL = "hello@ryangroup.example";
+export const CONTACT_EMAIL = site.email;
 
 export const topics = [
   "Construction Project",
