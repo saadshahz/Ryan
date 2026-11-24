@@ -324,7 +324,8 @@ export const projects: Project[] = [
         src: emeraldAsset("web/entrance-arch-cover-1200.jpg"),
         alt: "Ryan Emerald Valley project film: entrance, plots and surroundings",
         video: {
-          src: emeraldAsset("video 2.mp4"),
+          // Web-optimised copy (720p, ~8 MB) of "video 2.mp4"; the 20 MB original stays in public/emerald/.
+          src: emeraldAsset("web/film-2-720p.mp4"),
           type: "video/mp4",
           aspectRatio: "9 / 16",
           title: "Project Film · Entrance, Plots & Surroundings",
