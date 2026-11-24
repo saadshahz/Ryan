@@ -214,10 +214,7 @@ export function PageFooter({ topId }: { topId: string }) {
           <h3>Our Businesses</h3>
           <a href="/construction">Construction</a>
           <a href="/about#business-verticals">
-            PG Accommodation <small>Soon</small>
-          </a>
-          <a href="/about#business-verticals">
-            Real Estate <small>Soon</small>
+            Real Estate <small>Coming Soon</small>
           </a>
         </div>
         <div className="footer-column contact-details">

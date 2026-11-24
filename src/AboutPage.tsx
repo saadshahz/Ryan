@@ -8,8 +8,6 @@ const images = {
     "https://images.unsplash.com/photo-1770756248866-00b8b7c1dd75?auto=format&fit=crop&w=1300&q=88",
   construction:
     "https://images.unsplash.com/photo-1757356657991-c3fd6e2e812e?auto=format&fit=crop&w=1500&q=88",
-  accommodation:
-    "https://images.unsplash.com/photo-1614595737683-1740e41bfaac?auto=format&fit=crop&w=1200&q=88",
   realEstate:
     "https://images.unsplash.com/photo-1573918644828-9598c67e680c?auto=format&fit=crop&w=1100&q=86",
   closing:
@@ -34,7 +32,7 @@ const journey = [
   ["Foundation", "Ryan Group begins with a focus on dependable, quality-led construction."],
   ["Growth", "A growing portfolio of residential and commercial projects across the region."],
   ["Recognition", "A reputation built on delivery, craftsmanship, and client trust."],
-  ["Expansion", "New verticals in PG accommodation and real estate, built on the same foundation."],
+  ["Expansion", "A real estate vertical in preparation, built on the same foundation."],
 ];
 
 const businesses = [
@@ -45,13 +43,6 @@ const businesses = [
     text: "Residential, commercial, and planning-led construction delivered with precision, accountability, and enduring quality.",
     image: images.construction,
     href: "/construction",
-  },
-  {
-    key: "upcoming",
-    title: "PG Accommodation",
-    status: "Coming Soon",
-    text: "Thoughtfully managed living spaces offering comfort, safety, and convenience for students and professionals.",
-    image: images.accommodation,
   },
   {
     key: "upcoming",
@@ -215,7 +206,7 @@ function AboutPage() {
                 </h2>
                 <p>
                   To grow into a trusted, diversified property group, recognised for enduring
-                  spaces across construction, accommodation, and real estate.
+                  spaces across construction and real estate.
                 </p>
               </div>
             </div>
@@ -289,11 +280,11 @@ function AboutPage() {
                   </h2>
                 </div>
                 <p className="reveal">
-                  Construction is our foundation. PG accommodation and real estate are the next
-                  chapters, built on the same commitment to quality.
+                  Construction is our foundation. Real estate is the next chapter, built on the
+                  same commitment to quality.
                 </p>
               </div>
-              <div className="about-business-grid">
+              <div className="about-business-grid is-pair">
                 {businesses.map((business, index) => (
                   <article
                     className={`about-business-card ${business.key} reveal`}
@@ -302,17 +293,21 @@ function AboutPage() {
                     <div className="about-business-image">
                       <img loading="lazy" decoding="async" src={business.image} alt="" />
                       <span className="vertical-number">0{index + 1}</span>
+                      {!business.href && (
+                        <span className="vertical-soon">
+                          <i />
+                          Coming Soon
+                        </span>
+                      )}
                     </div>
                     <div className="about-business-copy">
                       <span className="status">{business.status}</span>
                       <h3>{business.title}</h3>
                       <p>{business.text}</p>
-                      {business.href ? (
+                      {business.href && (
                         <a href={business.href} className="business-explore">
                           Explore <Arrow />
                         </a>
-                      ) : (
-                        <span className="business-explore muted">Launching Soon</span>
                       )}
                     </div>
                   </article>

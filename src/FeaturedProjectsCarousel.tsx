@@ -1,7 +1,7 @@
 import { useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 import { Arrow } from "./PageChrome";
-import { projectPath, projects as allProjects, type Project } from "./projectData";
+import { projectEnquiryPath, projectPath, projects as allProjects, type Project } from "./projectData";
 
 type Props = {
   eyebrow?: string;
@@ -90,7 +90,7 @@ function FeaturedProjectsCarousel({
     else prev();
   };
 
-  const mainImage = project.galleryImages[0] ?? project.cardImage;
+  const mainImage = project.carouselImage ?? project.galleryImages[0] ?? project.cardImage;
 
   const renderPreview = (item: Project, side: "left" | "right") => (
     <button
@@ -160,7 +160,9 @@ function FeaturedProjectsCarousel({
             >
               <img loading="lazy" decoding="async" src={mainImage.src} alt={mainImage.alt} draggable={false} />
             </div>
-            <span className="fpc-badge">Featured Project</span>
+            <span className="fpc-badge">
+              {project.badge ?? "Featured Project"}
+            </span>
           </div>
 
           <div className="fpc-panel">
@@ -182,8 +184,8 @@ function FeaturedProjectsCarousel({
                   View Project <Arrow />
                 </a>
                 {showEnquiry && (
-                  <a href="/contacts#enquiry-form" className="fpc-enquire">
-                    Enquire About This Project
+                  <a href={projectEnquiryPath(project)} className="fpc-enquire">
+                    {project.enquiryLabel ?? "Enquire About This Project"}
                   </a>
                 )}
               </div>

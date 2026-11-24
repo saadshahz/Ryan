@@ -16,7 +16,7 @@ type Story = {
 const base = import.meta.env.BASE_URL;
 
 // Add footage by placing the file in /public and setting videoSrc,
-// e.g. `${base}Video%202.mp4` for "public/Video 2.mp4" (spaces must be encoded as %20).
+// e.g. `${base}construction.mp4` for "public/construction.mp4" (encode spaces as %20).
 const stories: Story[] = [
   {
     id: "craft",
@@ -24,7 +24,7 @@ const stories: Story[] = [
     title: "The Art of Building",
     category: "Construction",
     description: "Every detail reflects our commitment to precision and quality.",
-    videoSrc: `${base}Video%201.mp4`,
+    videoSrc: `${base}construction.mp4`,
     posterSrc:
       "https://images.unsplash.com/photo-1608619769165-25647672335f?auto=format&fit=crop&w=900&q=85",
     posterAlt: "Concrete structure under construction with exposed formwork and scaffolding",
@@ -35,6 +35,7 @@ const stories: Story[] = [
     title: "Designed for Tomorrow",
     category: "Architecture",
     description: "A vision shaped by thoughtful design and enduring value.",
+    videoSrc: `${base}architecture.mp4`,
     posterSrc:
       "https://images.unsplash.com/photo-1614595737476-42487331b8a1?auto=format&fit=crop&w=1000&q=86",
     posterAlt: "Contemporary residential architecture with clean facades and landscaped grounds",
@@ -45,6 +46,7 @@ const stories: Story[] = [
     title: "Behind the Structure",
     category: "Behind the Scenes",
     description: "Discover the people, process, and purpose behind our work.",
+    videoSrc: `${base}Bts.mp4`,
     posterSrc:
       "https://images.unsplash.com/photo-1760296404241-2d60056d401f?auto=format&fit=crop&w=900&q=85",
     posterAlt: "Architectural plans and site planning materials laid out for review",
@@ -216,7 +218,8 @@ function HomeStories() {
   const [inView, setInView] = useState(false);
   const [pageVisible, setPageVisible] = useState(true);
   const [userPaused, setUserPaused] = useState(false);
-  const [mutedByUser, setMutedByUser] = useState(false);
+  // Starts muted: the films play silently, and visitors can switch sound on with the button.
+  const [mutedByUser, setMutedByUser] = useState(true);
   const [soundBlocked, setSoundBlocked] = useState(false);
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   const [startedSet, setStartedSet] = useState<Set<number>>(() => new Set());
@@ -418,11 +421,13 @@ function HomeStories() {
         <div className="inside-track" ref={trackRef}>
           {stories.map((story, index) => {
             const isActive = index === activeIndex && playable.includes(index);
-            const preload = isActive
-              ? "auto"
-              : playable.includes(index) && index === nextIn(playable, activeIndex)
-                ? "metadata"
-                : "none";
+            // Nothing is fetched in full until the section is on screen.
+            const preload =
+              isActive && inView
+                ? "auto"
+                : isActive || (playable.includes(index) && index === nextIn(playable, activeIndex))
+                  ? "metadata"
+                  : "none";
             return (
               <div
                 key={story.id}

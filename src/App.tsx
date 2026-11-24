@@ -12,6 +12,7 @@ import ContactsPage from "./ContactsPage";
 import NotFoundPage from "./NotFoundPage";
 import FeaturedProjectsCarousel from "./FeaturedProjectsCarousel";
 import HomeStories from "./HomeStories";
+import HeroVideo from "./HeroVideo";
 
 const images = {
   hero: fitWidth("https://images.unsplash.com/photo-1757356657991-c3fd6e2e812e?auto=format&fit=crop&w=2200&q=90"),
@@ -19,9 +20,6 @@ const images = {
     "https://images.unsplash.com/photo-1614595737476-42487331b8a1?auto=format&fit=crop&w=1200&q=88",
   construction:
     "https://images.unsplash.com/photo-1608619769165-25647672335f?auto=format&fit=crop&w=1000&q=86",
-  pg: "https://images.unsplash.com/photo-1453586857165-eb78d44460ca?auto=format&fit=crop&w=1000&q=86",
-  realEstate:
-    "https://images.unsplash.com/photo-1589360810891-0935e508429a?auto=format&fit=crop&w=1000&q=86",
   vision:
     fitWidth("https://images.unsplash.com/photo-1624204386084-dd8c05e32226?auto=format&fit=crop&w=2200&q=90"),
 };
@@ -118,7 +116,14 @@ function App() {
       <PageHeader active="Home" />
 
       <main>
-        <section id="home" className="hero" style={{ backgroundImage: `url(${images.hero})` }}>
+        <section
+          id="home"
+          className={`hero ${site.heroVideo ? "has-video" : ""}`}
+          style={{ backgroundImage: `url(${images.hero})` }}
+        >
+          {site.heroVideo && (
+            <HeroVideo src={site.heroVideo.src} type={site.heroVideo.type} poster={images.hero} />
+          )}
           <div className="hero-overlay" />
           <div className="container
            hero-content">
@@ -260,9 +265,8 @@ function App() {
               <em>Building Possibilities.</em>
             </h2>
             <p>
-              Our vision is to grow beyond construction, creating opportunities across property,
-              accommodation, and future development while maintaining the values that define Ryan
-              Group.
+              Our vision is to grow beyond construction, creating opportunities in real estate and
+              future development while maintaining the values that define Ryan Group.
             </p>
             <a href="/about#business-verticals" className="button golden-button">
               Explore Our Vision <Arrow />

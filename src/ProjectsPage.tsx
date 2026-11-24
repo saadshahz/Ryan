@@ -100,7 +100,7 @@ function ProjectsPage() {
               construction and a commitment to enduring quality.
             </p>
           </div>
-          <div className="portfolio-hero-number">02</div>
+          <div className="portfolio-hero-number">03</div>
         </section>
 
         <section className="section portfolio-introduction">
@@ -112,9 +112,9 @@ function ProjectsPage() {
             </Heading>
             <p className="portfolio-intro-copy reveal">
               Every project represents an opportunity to create something
-              meaningful. Explore Ryan Group&apos;s portfolio of completed
-              buildings, reflecting our commitment to thoughtful construction,
-              quality, and lasting value.
+              meaningful. Explore Ryan Group&apos;s portfolio of residential
+              developments and villa plots, reflecting our commitment to
+              thoughtful planning, quality, and lasting value.
             </p>
           </div>
         </section>
@@ -122,7 +122,7 @@ function ProjectsPage() {
         <section id="our-projects" className="section portfolio-showcase">
           <div className="container">
             <FeaturedProjectsCarousel
-              eyebrow="COMPLETED PROJECTS"
+              eyebrow="PROJECTS"
               title={
                 <>
                   A Portfolio Built
@@ -130,7 +130,7 @@ function ProjectsPage() {
                   with <em>Purpose</em>
                 </>
               }
-              intro="Two completed buildings. One enduring approach to quality, thoughtfulness, and value."
+              intro="Three distinctive developments. One enduring approach to quality, thoughtfulness, and value."
               showViewAll={false}
               showEnquiry
             />
@@ -144,9 +144,9 @@ function ProjectsPage() {
             </Heading>
             <div className="portfolio-metrics">
               {[
-                ["02", "Completed Projects"],
-                ["02", "Featured Buildings"],
-                ["01", "Core Expertise"],
+                ["03", "Featured Projects"],
+                ["02", "Completed Buildings"],
+                ["01", "Now Open for EOI"],
                 ["01", "Commitment to Quality"],
               ].map(([number, label], index) => (
                 <div className="portfolio-metric reveal" key={label}>

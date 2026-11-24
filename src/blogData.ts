@@ -689,7 +689,7 @@ export const articles: Article[] = (
       title: "Looking Ahead: Ryan Group's Growing Business Verticals",
       category: "Company Updates",
       excerpt:
-        "An illustrative placeholder for future updates on the group's construction, accommodation and real estate ventures.",
+        "An illustrative placeholder for future updates on the group's construction and real estate ventures.",
       image: "1680874261352-ed1ee3d1cf01",
       alt: "Row of white contemporary villas",
       publicationDate: "2026-07-23",

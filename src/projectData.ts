@@ -2,13 +2,27 @@ import { fitWidth } from "./responsiveImage";
 /*
  * Central project data for the project detail pages (/projects/:slug).
  *
- * Project names, categories, statuses and primary images match the existing Projects page.
- * Everything else (location, specifications, features, FAQ answers and the extra gallery
+ * Ryan Heights and Ryan Grand Residency: names, categories, statuses and primary images match the
+ * existing Projects page. Everything else (location, specifications, features, FAQ answers and the extra gallery
  * images) is illustrative placeholder content for the client presentation. Replace it with
  * verified details from Ryan Group before launch.
+ *
+ * Ryan Emerald Valley (isVerified) uses project information supplied by Ryan Group and its own
+ * renders and draft masterplan from public/emerald/.
  */
 
-export type ProjectImage = { src: string; alt: string };
+export type ProjectImage = {
+  src: string;
+  alt: string;
+  /** Gallery videos: `src` is the poster image and `video` the file played in the viewer. */
+  video?: {
+    src: string;
+    type: string;
+    title: string;
+    /** Frame shape, e.g. "9 / 16" for portrait films; reserves the player size before loading. */
+    aspectRatio?: string;
+  };
+};
 
 export type FeatureIcon =
   | "architecture"
@@ -18,7 +32,16 @@ export type FeatureIcon =
   | "design"
   | "detail"
   | "living"
-  | "sustainable";
+  | "sustainable"
+  | "landscape"
+  | "temple"
+  | "fitness"
+  | "cctv"
+  | "senior"
+  | "games"
+  | "entrance"
+  | "roads"
+  | "security";
 
 export type ProjectFeature = { icon: FeatureIcon; title: string; description: string };
 export type ProjectFaq = { question: string; answer: string };
@@ -37,9 +60,35 @@ export type Project = {
   secondaryDescription: string;
   heroImage: string;
   cardImage: ProjectImage;
+  /** Main image in the projects carousel. Defaults to the first gallery image. */
+  carouselImage?: ProjectImage;
   galleryImages: ProjectImage[];
   specifications: [label: string, value: string][];
   features: ProjectFeature[];
+  /** True for projects whose details are confirmed by Ryan Group (no placeholder labels). */
+  isVerified?: boolean;
+  /** Label on the project image in the carousel, e.g. "EOI Open". Defaults to "Featured Project". */
+  badge?: string;
+  /** Label for the enquiry call to action, e.g. "Register Your Interest". */
+  enquiryLabel?: string;
+  /** Note shown under the gallery, e.g. that images are artist’s impressions. */
+  imageNote?: string;
+  subtitle?: string;
+  presentedBy?: string;
+  developedBy?: string;
+  highlights?: [label: string, value: string][];
+  plotDimensions?: string[];
+  masterplan?: ProjectImage & {
+    /** Higher-resolution file for close inspection. */
+    fullSrc: string;
+    /** Caption such as "Draft masterplan dated 18.11.2025". */
+    note: string;
+  };
+  amenities?: ProjectFeature[];
+  pricing?: {
+    startingPrice: string;
+    approvals: string[];
+  };
   address: {
     lines: string[];
     /** Only set once a verified address exists; enables "Get Directions". */
@@ -47,6 +96,9 @@ export type Project = {
   };
   faqs: ProjectFaq[];
 };
+
+/** Ryan Emerald Valley assets live in public/emerald/ (web-sized copies in public/emerald/web/). */
+const emeraldAsset = (file: string) => `${import.meta.env.BASE_URL}emerald/${encodeURI(file)}`;
 
 const image = (id: string, width: number) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${width}&q=86`;
@@ -230,8 +282,131 @@ export const projects: Project[] = [
     address: { lines: ["Dummy Location", "Address to be confirmed"] },
     faqs: placeholderFaqs("Ryan Grand Residency", "Residential development"),
   },
+  {
+    slug: "ryan-emerald-valley",
+    number: "03",
+    name: "Ryan Emerald Valley",
+    category: "Villa Plot Development",
+    projectType: "Residential Villa Plot Development",
+    location: "Near Sathanuru Bus Stop, Kanakapura",
+    status: "EOI Collection Open",
+    summary:
+      "A thoughtfully planned 9.25-acre villa plot development offering 151 premium residential plots in Kanakapura.",
+    description:
+      "Ryan Emerald Valley is an exclusive residential villa plot development presented by Ryan Group and developed by Ryan Buildtech. Spread across 9.25 acres, the development features 151 premium residential villa plots, offering an opportunity to build a dream home in a thoughtfully planned residential environment.",
+    secondaryDescription:
+      "Located near Sathanuru Bus Stop, Kanakapura, the project combines comfortable living, planned infrastructure, and investment potential. Every detail is conceived to support a balanced residential community.",
+    heroImage: emeraldAsset("web/entrance-arch-cover-2400.jpg"),
+    cardImage: {
+      src: emeraldAsset("web/entrance-arch-cover-1200.jpg"),
+      alt: "Artist’s impression of the Ryan Emerald Valley entrance arch",
+    },
+    galleryImages: [
+      {
+        src: emeraldAsset("web/entrance-arch-2400.jpg"),
+        alt: "Artist’s impression of the grand entrance arch at Ryan Emerald Valley, with the gated entry road and security cabin",
+      },
+      {
+        src: emeraldAsset("web/aerial-view-2400.jpg"),
+        alt: "Artist’s impression of an aerial view of Ryan Emerald Valley, showing the numbered villa plots, internal roads and landscaped parks",
+      },
+      {
+        src: emeraldAsset("web/aerial-view-cover-1200.jpg"),
+        alt: "Ryan Emerald Valley project film: amenities and lifestyle",
+        video: {
+          src: emeraldAsset("Video 1.mp4"),
+          type: "video/mp4",
+          aspectRatio: "9 / 16",
+          title: "Project Film · Amenities & Lifestyle",
+        },
+      },
+      {
+        src: emeraldAsset("web/entrance-arch-cover-1200.jpg"),
+        alt: "Ryan Emerald Valley project film: entrance, plots and surroundings",
+        video: {
+          src: emeraldAsset("video 2.mp4"),
+          type: "video/mp4",
+          aspectRatio: "9 / 16",
+          title: "Project Film · Entrance, Plots & Surroundings",
+        },
+      },
+      {
+        src: emeraldAsset("web/masterplan-draft-1800.jpg"),
+        alt: "Draft masterplan of Ryan Emerald Valley, showing the plot layout, roads, parks and amenity zones",
+      },
+    ],
+    specifications: [
+      ["Presented By", "Ryan Group"],
+      ["Developed By", "Ryan Buildtech"],
+      ["Project Type", "Premium Residential Villa Plot Development"],
+      ["Location", "Near Sathanuru Bus Stop, Kanakapura"],
+      ["Total Area", "9.25 Acres"],
+      ["Total Plots", "151 Premium Residential Plots"],
+      ["Plot Dimensions", "30 × 40, 30 × 50, 60 × 40"],
+      ["Launch Price", "From ₹2,850 per sq. ft."],
+      ["Approvals", "BMRDA & RERA Approved"],
+      ["Current Status", "EOI Collection Open"],
+    ],
+    features: [
+      { icon: "landscape", title: "Beautifully Landscaped Parks & Gardens", description: "Landscaped green spaces for everyday recreation and relaxation." },
+      { icon: "temple", title: "Dedicated Sai Baba Temple", description: "A dedicated temple within the planned community." },
+      { icon: "fitness", title: "Outdoor Fitness Centre", description: "An outdoor fitness area for an active lifestyle." },
+      { icon: "cctv", title: "24/7 CCTV Surveillance", description: "Continuous CCTV surveillance across the development." },
+      { icon: "senior", title: "Dedicated Senior Citizens' Park", description: "A dedicated park for senior residents." },
+      { icon: "games", title: "Indoor Games Area", description: "A sheltered indoor space for games and recreation." },
+      { icon: "entrance", title: "Grand Entrance Arch", description: "A distinguished entrance arch welcoming residents and visitors." },
+      { icon: "roads", title: "Wide, Tree-Lined Roads", description: "Wide internal roads planned with tree-lined edges." },
+      { icon: "security", title: "24/7 Security", description: "Round-the-clock security for residents." },
+    ],
+    carouselImage: {
+      src: emeraldAsset("web/entrance-arch-cover-1200.jpg"),
+      alt: "Artist’s impression of the grand entrance arch at Ryan Emerald Valley",
+    },
+    isVerified: true,
+    badge: "EOI Open",
+    enquiryLabel: "Register Your Interest",
+    imageNote: "Images are artist’s impressions and the masterplan is a draft, for representation only.",
+    subtitle: "A New Address for a Better Tomorrow.",
+    presentedBy: "Ryan Group",
+    developedBy: "Ryan Buildtech",
+    highlights: [
+      ["9.25 Acres", "Total Development Area"],
+      ["151", "Premium Residential Plots"],
+      ["3", "Plot Dimension Options"],
+      ["₹2,850", "Starting Price per Sq. Ft."],
+    ],
+    plotDimensions: ["30 × 40", "30 × 50", "60 × 40"],
+    masterplan: {
+      src: emeraldAsset("web/masterplan-draft-3600.jpg"),
+      fullSrc: emeraldAsset("01.Masterplan_DRAFT_18.11.2025.png"),
+      alt: "Draft masterplan of Ryan Emerald Valley, showing the plot layout, internal roads, parks, civic amenity area and amenity zones, with a legend and plot categories",
+      note: "Draft masterplan dated 18.11.2025 · Subject to change",
+    },
+    pricing: {
+      startingPrice: "₹2,850 per sq. ft. onwards",
+      approvals: ["BMRDA Approved", "RERA Approved"],
+    },
+    address: {
+      lines: ["Near Sathanuru Bus Stop", "Kanakapura"],
+      mapsUrl: "https://www.google.com/maps/search/?api=1&query=Sathanuru+Bus+Stop%2C+Kanakapura%2C+Karnataka",
+    },
+    faqs: [
+      { question: "Where is Ryan Emerald Valley located?", answer: "Ryan Emerald Valley is located near Sathanuru Bus Stop in Kanakapura." },
+      { question: "Who is developing the project?", answer: "Ryan Emerald Valley is presented by Ryan Group and developed by Ryan Buildtech." },
+      { question: "How large is the development?", answer: "The development spans 9.25 acres." },
+      { question: "How many residential plots are available in the project?", answer: "The project comprises 151 premium residential plots." },
+      { question: "What plot dimensions are offered?", answer: "The available plot dimension options are 30 × 40, 30 × 50, and 60 × 40." },
+      { question: "What is the starting price?", answer: "The launch price starts from ₹2,850 per sq. ft. onwards. Please confirm current pricing and availability with the project sales team." },
+      { question: "What approvals does the project have?", answer: "The project is BMRDA and RERA approved." },
+      { question: "Is EOI collection currently open?", answer: "Yes. Expression of Interest (EOI) collection is currently open. Use the Register Your Interest form to receive priority updates on plot availability, pricing and project details." },
+    ],
+  },
 ];
 
 export const projectPath = (slug: string) => `/projects/${slug}`;
+
+/** Contact page enquiry form with this project preselected. */
+export const projectEnquiryPath = (project: Project) =>
+  `/contacts?project=${encodeURIComponent(project.slug)}#enquiry-form`;
 
 export const findProject = (slug: string) => projects.find((project) => project.slug === slug);

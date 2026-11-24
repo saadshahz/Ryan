@@ -3781,6 +3781,7 @@ footer {
 .story-media img,
 .story-media video {
   object-fit: cover;
+  object-position: center;
   filter: grayscale(0.85) saturate(0.6);
   transition:
     transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1),
@@ -4503,6 +4504,7 @@ footer {
   text-transform: uppercase;
 }
 .cp-field input,
+.cp-field select,
 .cp-field textarea {
   width: 100%;
   padding: 14px 16px;
@@ -4525,6 +4527,7 @@ footer {
   color: #9a9389;
 }
 .cp-field input:focus,
+.cp-field select:focus,
 .cp-field textarea:focus {
   outline: none;
   border-color: var(--gold);
@@ -4838,6 +4841,12 @@ footer {
 }
 .pd-hero .portfolio-hero-content {
   padding-top: 40px;
+}
+.pd-hero-subtitle {
+  max-width: 620px;
+  margin-top: 20px;
+  color: rgba(255, 255, 255, 0.92);
+  font: 500 clamp(20px, 2.1vw, 30px)/1.35 var(--serif);
 }
 .pd-hero-meta {
   display: flex;
@@ -5173,6 +5182,218 @@ footer {
 }
 
 /* Overview + specifications */
+.re-highlights {
+  padding: 0 0 96px;
+  background: var(--white);
+}
+.re-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid rgba(212, 175, 55, 0.42);
+  border-radius: 18px;
+  background: var(--ivory);
+}
+.re-highlight {
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px;
+  text-align: center;
+}
+.re-highlight + .re-highlight {
+  border-left: 1px solid rgba(212, 175, 55, 0.28);
+}
+.re-highlight strong {
+  color: var(--navy);
+  font: 500 clamp(28px, 3vw, 44px)/1.1 var(--serif);
+}
+.re-highlight span {
+  margin-top: 12px;
+  color: rgb(138, 101, 38);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.re-dimensions {
+  background: var(--ivory);
+}
+.re-dimension-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 54px;
+}
+.re-dimension-card {
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(212, 175, 55, 0.42);
+  border-radius: 16px;
+  background:
+    linear-gradient(rgba(212, 175, 55, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.06) 1px, transparent 1px),
+    var(--white);
+  background-size: 24px 24px;
+  text-align: center;
+}
+.re-dimension-card span,
+.re-dimension-card small {
+  color: rgb(138, 101, 38);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.re-dimension-card strong {
+  margin: 18px 0 12px;
+  color: var(--navy);
+  font: 500 clamp(34px, 4vw, 52px)/1 var(--serif);
+}
+.re-masterplan {
+  background: var(--navy);
+  color: var(--white);
+}
+.re-masterplan .section-title h2 {
+  color: var(--white);
+}
+.re-masterplan-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 38px;
+}
+.re-masterplan-note {
+  margin-bottom: 10px;
+  color: var(--gold);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.re-masterplan-image {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: 18px;
+  background: var(--ivory);
+  cursor: zoom-in;
+}
+.re-masterplan-image img {
+  width: 100%;
+  max-height: 720px;
+  object-fit: contain;
+  background: #f7f3ea;
+}
+.re-masterplan-image > span {
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.re-masterplan-image > span svg {
+  width: 15px;
+  color: var(--gold);
+}
+.re-pricing {
+  background: var(--white);
+}
+.re-pricing-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.72fr);
+  align-items: center;
+  gap: clamp(40px, 8vw, 120px);
+}
+.re-pricing-disclaimer {
+  max-width: 520px;
+  margin-top: 24px;
+  color: #777066;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.re-pricing-card {
+  padding: 38px;
+  border: 1px solid rgba(212, 175, 55, 0.48);
+  border-radius: 18px;
+  background: var(--ivory);
+  text-align: center;
+}
+.re-pricing-card > span {
+  color: rgb(138, 101, 38);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.re-pricing-card > strong {
+  display: block;
+  margin: 16px 0 24px;
+  color: var(--navy);
+  font: 500 clamp(28px, 3vw, 42px)/1.2 var(--serif);
+}
+.re-approvals {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  border-top: 1px solid rgba(6, 26, 58, 0.12);
+  padding-top: 20px;
+}
+.re-approvals p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 600;
+}
+.re-approvals svg {
+  width: 16px;
+  color: rgb(138, 101, 38);
+}
+.re-eoi {
+  padding: 82px 0;
+  background: var(--navy);
+  color: var(--white);
+}
+.re-eoi-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+.re-eoi-inner h2 {
+  margin-top: 12px;
+  font: 500 clamp(42px, 5vw, 68px)/1.05 var(--serif);
+}
+.re-eoi-inner h2 em {
+  color: var(--gold);
+  font-style: normal;
+}
+.re-eoi-inner p {
+  max-width: 680px;
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.8;
+}
+.re-eoi-inner .button {
+  flex: none;
+}
 .pd-overview {
   background: var(--white);
 }
@@ -5656,6 +5877,28 @@ footer {
 }
 
 @media (max-width: 900px) {
+  .re-highlights-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .re-highlight:nth-child(3) {
+    border-left: 0;
+  }
+  .re-highlight:nth-child(n + 3) {
+    border-top: 1px solid rgba(212, 175, 55, 0.28);
+  }
+  .re-dimension-grid {
+    grid-template-columns: 1fr;
+  }
+  .re-dimension-card {
+    min-height: 180px;
+  }
+  .re-masterplan-head,
+  .re-eoi-inner {
+    align-items: flex-start;
+  }
+  .re-pricing-grid {
+    grid-template-columns: 1fr;
+  }
   .pd-gallery-grid {
     grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
     height: clamp(360px, 60vw, 520px);
@@ -5671,6 +5914,51 @@ footer {
 }
 
 @media (max-width: 600px) {
+  .re-highlights {
+    padding-bottom: 72px;
+  }
+  .re-highlights-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .re-highlight {
+    min-height: 150px;
+    padding: 22px 12px;
+  }
+  .re-highlight strong {
+    font-size: 24px;
+  }
+  .re-highlight span {
+    font-size: 10px;
+  }
+  .re-dimension-grid {
+    margin-top: 38px;
+  }
+  .re-masterplan-head,
+  .re-eoi-inner {
+    flex-direction: column;
+  }
+  .re-masterplan-image {
+    border-radius: 12px;
+  }
+  .re-masterplan-image img {
+    max-height: 420px;
+  }
+  .re-masterplan-image > span {
+    right: 10px;
+    bottom: 10px;
+  }
+  .re-pricing-card {
+    padding: 28px 18px;
+  }
+  .re-approvals {
+    grid-template-columns: 1fr;
+  }
+  .re-eoi {
+    padding: 64px 0;
+  }
+  .re-eoi-inner .button {
+    width: 100%;
+  }
   .pd-hero {
     min-height: 0;
     padding: 110px 0 80px;
@@ -8287,4 +8575,321 @@ ol.bd-list li::before {
 }
 .not-found-actions .button {
   margin-top: 0;
+}
+
+/* Ryan Emerald Valley: enquiry project select, gallery note, full-resolution masterplan link */
+.cp-field select {
+  appearance: none;
+  min-height: 50px;
+  padding-right: 44px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%238a6526' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-position: right 18px center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.pd-gallery-note {
+  margin-top: 18px;
+  color: #6f675c;
+  font-size: 12px;
+  font-style: italic;
+  line-height: 1.6;
+}
+.re-masterplan-full {
+  margin-top: 18px;
+  text-align: right;
+}
+.re-masterplan-full a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.re-masterplan-full a:hover,
+.re-masterplan-full a:focus-visible {
+  color: var(--white);
+}
+@media (max-width: 600px) {
+  .re-masterplan-full {
+    text-align: left;
+  }
+}
+/* Readable-text floor for the Emerald Valley sections (matches the site-wide <=1023px floor). */
+@media (max-width: 1023px) {
+  .re-highlight span,
+  .re-dimension-card span,
+  .re-dimension-card small,
+  .re-masterplan-image > span,
+  .re-pricing-card > span {
+    font-size: 10px;
+  }
+}
+@media (max-width: 600px) {
+  /* Keep the masterplan unobstructed on phones: the "View Larger" label sits under the image. */
+  .re-masterplan-image > span {
+    position: static;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border-radius: 0;
+  }
+}
+/* Amenity grids whose count fills three columns (e.g. 9) use a 3 x 3 layout on desktop;
+   in two-column layouts an odd last card spans the full row instead of leaving a gap. */
+@media (min-width: 1101px) {
+  .pd-feature-grid.cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 1100px) {
+  .pd-feature-grid.is-odd .pd-feature:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Project gallery films (Ryan Emerald Valley): play markers, the in-viewer player, load errors */
+.pd-gallery-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: linear-gradient(180deg, rgba(3, 18, 41, 0.05), rgba(3, 18, 41, 0.45));
+  color: var(--white);
+  pointer-events: none;
+}
+.pd-gallery-play-icon {
+  width: 84px;
+  height: 84px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(212, 175, 55, 0.85);
+  border-radius: 50%;
+  background: rgba(6, 26, 58, 0.62);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 0 10px rgba(212, 175, 55, 0.14);
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.7, 0.3, 1),
+    background 0.35s ease;
+}
+.pd-gallery-play-icon svg {
+  width: 28px;
+  height: 28px;
+  margin-left: 4px;
+  color: var(--gold);
+  fill: var(--gold);
+}
+.pd-gallery-play small {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+}
+@media (hover: hover) {
+  .pd-gallery-main:hover .pd-gallery-play-icon {
+    transform: scale(1.06);
+    background: rgba(6, 26, 58, 0.82);
+  }
+}
+.pd-thumb-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(212, 175, 55, 0.85);
+  border-radius: 50%;
+  background: rgba(6, 26, 58, 0.66);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.pd-thumb-play svg {
+  width: 15px;
+  height: 15px;
+  margin-left: 2px;
+  color: var(--gold);
+  fill: var(--gold);
+}
+.pd-lightbox-thumbs button {
+  position: relative;
+}
+.pd-lightbox-thumbs .pd-thumb-play {
+  width: 26px;
+  height: 26px;
+}
+.pd-lightbox-thumbs .pd-thumb-play svg {
+  width: 10px;
+  height: 10px;
+  margin-left: 1px;
+}
+.pd-lightbox-video {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100% - 40px);
+  min-height: 0;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 12px;
+  background: #000;
+  object-fit: contain;
+}
+.pd-lightbox-stage figure.is-video {
+  min-height: 0;
+}
+.pd-video-error {
+  position: relative;
+  max-width: min(720px, 100%);
+  max-height: calc(100% - 40px);
+  overflow: hidden;
+  border-radius: 12px;
+}
+.pd-video-error img {
+  width: 100%;
+  opacity: 0.35;
+}
+.pd-video-error p {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 18px;
+  font-size: 13px;
+  text-align: center;
+}
+.pd-video-error a {
+  color: var(--gold);
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .pd-gallery-play-icon {
+    width: 64px;
+    height: 64px;
+  }
+  .pd-gallery-play-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .pd-thumb-play {
+    width: 34px;
+    height: 34px;
+  }
+}
+.pd-lightbox-video[style*="aspect-ratio"] {
+  height: calc(100% - 40px);
+  width: auto;
+}
+@media (max-width: 600px) {
+  /* Films: keep the previous/next buttons below the player so they never cover its controls. */
+  .pd-lightbox-stage.has-video figure {
+    padding-bottom: 64px;
+  }
+  .pd-lightbox-stage.has-video .pd-lightbox-nav {
+    bottom: 6px;
+  }
+}
+
+/* Our Businesses: two verticals (Construction + Real Estate, coming soon) */
+.refined-verticals .about-business-grid.is-pair {
+  grid-template-columns: 1.12fr 0.88fr;
+}
+.about-business-image > .vertical-soon {
+  position: absolute;
+  top: 22px;
+  right: auto;
+  bottom: auto;
+  left: 22px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border: 1px solid rgba(212, 175, 55, 0.7);
+  border-radius: 999px;
+  background: rgba(6, 26, 58, 0.6);
+  backdrop-filter: blur(6px);
+  color: var(--gold);
+  font: 600 10px var(--sans);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.vertical-soon i {
+  position: relative;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.vertical-soon i::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  border-radius: 50%;
+  animation: verticalSoonPulse 2.4s ease-out infinite;
+}
+@keyframes verticalSoonPulse {
+  from {
+    opacity: 1;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.8);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vertical-soon i::after {
+    animation: none;
+  }
+}
+@media (max-width: 1000px) {
+  .refined-verticals .about-business-grid.is-pair {
+    grid-template-columns: 1fr 1fr;
+  }
+  .refined-verticals .about-business-grid.is-pair .about-business-card.current {
+    grid-column: auto;
+  }
+}
+@media (max-width: 600px) {
+  .refined-verticals .about-business-grid.is-pair {
+    grid-template-columns: 1fr;
+  }
+  .about-business-image > .vertical-soon {
+    top: 18px;
+    left: 18px;
+  }
+}
+
+/* Homepage hero background film (src/HeroVideo.tsx). The still image stays underneath. */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  pointer-events: none;
+}
+.hero-video.is-ready {
+  opacity: 1;
+}
+/* A slightly deeper navy wash keeps the copy readable over moving footage. */
+.hero.has-video .hero-overlay {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3, 18, 41, 0.92) 0%,
+      rgba(3, 18, 41, 0.74) 46%,
+      rgba(3, 18, 41, 0.3) 78%
+    ),
+    linear-gradient(0deg, rgba(3, 18, 41, 0.55), transparent 52%);
 }

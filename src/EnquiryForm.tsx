@@ -10,6 +10,7 @@ import {
 import { Arrow } from "./PageChrome";
 import { markEnquiryEngaged } from "./enquirySession";
 import { site } from "./siteConfig";
+import { findProject, projects } from "./projectData";
 
 /*
  * Shared enquiry form, used on the Contact page and in the site-wide enquiry popup.
@@ -30,6 +31,8 @@ type Values = {
   email: string;
   phone: string;
   topic: Topic | "";
+  /** Slug of the project the enquiry is about, or "" for none. */
+  project: string;
   location: string;
   details: string;
 };
@@ -41,6 +44,7 @@ const emptyValues: Values = {
   email: "",
   phone: "",
   topic: "",
+  project: "",
   location: "",
   details: "",
 };
@@ -112,8 +116,20 @@ type Props = {
   ref?: Ref<EnquiryFormHandle>;
 };
 
+/**
+ * Preselects a project from a link such as /contacts?project=ryan-emerald-valley, or from the
+ * project page currently open (the enquiry popup).
+ */
+function initialValues(): Values {
+  const fromQuery = findProject(new URLSearchParams(window.location.search).get("project") ?? "");
+  if (fromQuery) return { ...emptyValues, topic: "Existing Project Inquiry", project: fromQuery.slug };
+  const pageSlug = window.location.pathname.match(/^\/projects\/([^/]+)\/?$/)?.[1];
+  const fromPage = pageSlug ? findProject(pageSlug) : undefined;
+  return fromPage ? { ...emptyValues, project: fromPage.slug } : emptyValues;
+}
+
 function EnquiryForm({ idPrefix = "cp", showHead = true, ref }: Props) {
-  const [values, setValues] = useState<Values>(emptyValues);
+  const [values, setValues] = useState<Values>(initialValues);
   const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({});
   const [status, setStatus] = useState<"idle" | "invalid" | "sent">("idle");
   const successRef = useRef<HTMLHeadingElement>(null);
@@ -132,7 +148,7 @@ function EnquiryForm({ idPrefix = "cp", showHead = true, ref }: Props) {
       setStatus("idle");
   };
 
-  const inputProps = (name: Exclude<FieldName, "topic">) => {
+  const inputProps = (name: Exclude<FieldName, "topic" | "project">) => {
     const id = fieldId(name);
     const error = showError(name);
     return {
@@ -177,6 +193,7 @@ function EnquiryForm({ idPrefix = "cp", showHead = true, ref }: Props) {
       `Email: ${values.email.trim()}`,
       `Phone: ${values.phone.trim() || "Not provided"}`,
       `Topic: ${values.topic}`,
+      `Project of interest: ${findProject(values.project)?.name ?? "Not specified"}`,
       `Project location: ${values.location.trim() || "Not provided"}`,
       "",
       "Details:",
@@ -311,6 +328,22 @@ function EnquiryForm({ idPrefix = "cp", showHead = true, ref }: Props) {
       </fieldset>
 
       <div className="cp-field-grid">
+        <Field id={fieldId("project")} label="Project of Interest" full>
+          <select
+            id={fieldId("project")}
+            name="project"
+            value={values.project}
+            onChange={(event) => update("project", event.target.value)}
+          >
+            <option value="">Not about a specific project</option>
+            {projects.map((item) => (
+              <option key={item.slug} value={item.slug}>
+                {item.name}
+                {item.badge ? ` (${item.badge})` : ""}
+              </option>
+            ))}
+          </select>
+        </Field>
         <Field id={fieldId("location")} label="Project Location" full>
           <input
             {...inputProps("location")}

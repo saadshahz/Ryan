@@ -30,4 +30,12 @@ export const site = {
    * Contact page enquiry form instead of WhatsApp.
    */
   whatsappNumber: null as string | null,
+
+  /**
+   * Homepage hero background film (muted, looping). Place an approved file in public/ and set
+   * `src` to its URL path, e.g. "/media/hero.mp4" (encode spaces as %20). Keep it short
+   * (10-20 s), around 1280-1920 px wide, H.264 with +faststart, and ideally under 8 MB.
+   * While null, the hero shows its still image.
+   */
+  heroVideo: null as { src: string; type: string } | null,
 };

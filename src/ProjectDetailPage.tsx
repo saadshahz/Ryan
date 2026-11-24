@@ -2,24 +2,39 @@ import { useEffect, useRef, useState } from "react";
 import { fitWidth } from "./responsiveImage";
 import {
   Building2,
+  Cctv,
   Check,
+  Dices,
+  DoorOpen,
+  Dumbbell,
+  Expand,
+  Flower2,
   Gem,
   Info,
+  Landmark,
   LayoutPanelLeft,
   Leaf,
   MapPin,
   Navigation,
   PenTool,
+  ShieldCheck,
+  Route,
   Ruler,
   Share2,
-  ShieldCheck,
   Sofa,
+  Trees,
   type LucideIcon,
 } from "lucide-react";
 import { Arrow, PageFooter, PageHeader, RevealPage } from "./PageChrome";
-import ProjectGallery from "./ProjectGallery";
+import ProjectGallery, { Lightbox } from "./ProjectGallery";
 import FeaturedProjectsCarousel from "./FeaturedProjectsCarousel";
-import { findProject, projectPath, type FeatureIcon, type Project } from "./projectData";
+import {
+  findProject,
+  projectEnquiryPath,
+  projects as allProjects,
+  type FeatureIcon,
+  type Project,
+} from "./projectData";
 
 const featureIcons: Record<FeatureIcon, LucideIcon> = {
   architecture: Building2,
@@ -30,6 +45,15 @@ const featureIcons: Record<FeatureIcon, LucideIcon> = {
   detail: Gem,
   living: Sofa,
   sustainable: Leaf,
+  landscape: Trees,
+  temple: Landmark,
+  fitness: Dumbbell,
+  cctv: Cctv,
+  senior: Flower2,
+  games: Dices,
+  entrance: DoorOpen,
+  roads: Route,
+  security: ShieldCheck,
 };
 
 const closingImage =
@@ -212,6 +236,7 @@ function NotFound({ slug }: { slug: string }) {
 
 export default function ProjectDetailPage({ slug }: { slug: string }) {
   const project = findProject(slug);
+  const [planOpen, setPlanOpen] = useState(false);
 
   useEffect(() => {
     if (project) document.title = `${project.name} | Ryan Group Projects`;
@@ -220,6 +245,9 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
   if (!project) return <NotFound slug={slug} />;
 
   const [namePrefix, nameAccent] = splitName(project.name);
+  const suggestedProjects = allProjects.filter((item) => item.slug !== project.slug);
+  const enquiryHref = projectEnquiryPath(project);
+  const enquiryLabel = project.enquiryLabel ?? "Enquire About This Project";
 
   return (
     <RevealPage>
@@ -247,7 +275,11 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
                 {namePrefix && <>{namePrefix} </>}
                 <em>{nameAccent}</em>
               </h1>
-              <p>{project.summary}</p>
+              {project.subtitle ? (
+                <p className="pd-hero-subtitle">{project.subtitle}</p>
+              ) : (
+                <p>{project.summary}</p>
+              )}
               <dl className="pd-hero-meta">
                 <div>
                   <dt>Project Type</dt>
@@ -265,11 +297,17 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
                 </div>
               </dl>
               <div className="hero-actions">
-                <a href="#gallery" className="button golden-button">
-                  Explore Project <Arrow />
+                <a
+                  href={project.isVerified ? enquiryHref : "#gallery"}
+                  className="button golden-button"
+                >
+                  {project.isVerified ? enquiryLabel : "Explore Project"} <Arrow />
                 </a>
-                <a href="/contacts#enquiry-form" className="button button-ghost">
-                  Enquire About This Project <Arrow />
+                <a
+                  href={project.isVerified ? "#overview" : enquiryHref}
+                  className="button button-ghost"
+                >
+                  {project.isVerified ? "Explore Project" : "Enquire About This Project"} <Arrow />
                 </a>
               </div>
             </div>
@@ -279,6 +317,7 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
           <section id="gallery" className="section pd-gallery-section">
             <div className="container">
               <ProjectGallery images={project.galleryImages} title={project.name} />
+              {project.imageNote && <p className="pd-gallery-note">{project.imageNote}</p>}
             </div>
           </section>
 
@@ -291,7 +330,11 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
                     ABOUT THE PROJECT
                   </div>
                   <h2>
-                    Designed with <em>Purpose.</em>
+                    {project.isVerified ? (
+                      <>A New Standard of <em>Residential Living.</em></>
+                    ) : (
+                      <>Designed with <em>Purpose.</em></>
+                    )}
                   </h2>
                 </div>
                 <p className="pd-overview-lead reveal">{project.description}</p>
@@ -304,7 +347,7 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
               <aside className="pd-specs reveal" aria-labelledby="pd-specs-title">
                 <div className="pd-specs-head">
                   <h3 id="pd-specs-title">Project Specifications</h3>
-                  <span className="pd-placeholder-badge">Placeholder data</span>
+                  {!project.isVerified && <span className="pd-placeholder-badge">Placeholder data</span>}
                 </div>
                 <dl>
                   {project.specifications.map(([label, value]) => (
@@ -314,12 +357,105 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
                     </div>
                   ))}
                 </dl>
-                <p className="pd-specs-note">
-                  Illustrative details for presentation. To be confirmed by Ryan Group.
-                </p>
+                {!project.isVerified && (
+                  <p className="pd-specs-note">
+                    Illustrative details for presentation. To be confirmed by Ryan Group.
+                  </p>
+                )}
               </aside>
             </div>
           </section>
+
+          {project.isVerified && project.highlights && (
+            <>
+              <section className="section re-highlights">
+                <div className="container">
+                  <div className="re-highlights-grid reveal">
+                    {project.highlights.map(([value, label]) => (
+                      <article className="re-highlight" key={label}>
+                        <strong>{value}</strong>
+                        <span>{label}</span>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              <section className="section re-dimensions">
+                <div className="container">
+                  <div className="section-title centered reveal">
+                    <div className="eyebrow">
+                      <span />
+                      PLOT DIMENSIONS
+                    </div>
+                    <h2>
+                      Find the Space for <em>Your Vision.</em>
+                    </h2>
+                  </div>
+                  <div className="re-dimension-grid">
+                    {project.plotDimensions?.map((dimension) => (
+                      <article className="re-dimension-card reveal" key={dimension}>
+                        <span>RESIDENTIAL PLOT</span>
+                        <strong>{dimension}</strong>
+                        <small>Dimensions in feet</small>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              {project.masterplan && (
+                <section id="masterplan" className="section re-masterplan">
+                  <div className="container">
+                    <div className="re-masterplan-head">
+                      <div className="section-title reveal">
+                        <div className="eyebrow">
+                          <span />
+                          MASTERPLAN
+                        </div>
+                        <h2>
+                          Thoughtfully Planned.
+                          <br />
+                          <em>Beautifully Organized.</em>
+                        </h2>
+                      </div>
+                      <p className="re-masterplan-note reveal">{project.masterplan.note}</p>
+                    </div>
+                    <button
+                      type="button"
+                      className="re-masterplan-image reveal"
+                      onClick={() => setPlanOpen(true)}
+                      aria-label={`View the ${project.name} draft masterplan larger`}
+                    >
+                      <img
+                        src={project.masterplan.src}
+                        alt={project.masterplan.alt}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <span>
+                        View Larger <Expand aria-hidden="true" />
+                      </span>
+                    </button>
+                    <p className="re-masterplan-full reveal">
+                      <a href={project.masterplan.fullSrc} target="_blank" rel="noopener noreferrer">
+                        Open the full-resolution masterplan (PNG, 4 MB) <Arrow diagonal />
+                      </a>
+                    </p>
+                    {planOpen && (
+                      <Lightbox
+                        images={[project.masterplan]}
+                        index={0}
+                        title={`${project.name} · Draft Masterplan`}
+                        onIndex={() => {}}
+                        onClose={() => setPlanOpen(false)}
+                      />
+                    )}
+                  </div>
+                </section>
+              )}
+            </>
+          )}
 
           <section className="section pd-features">
             <div className="container">
@@ -327,19 +463,25 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
                 <div className="section-title centered reveal">
                   <div className="eyebrow">
                     <span />
-                    FEATURES &amp; AMENITIES
+                    {project.isVerified ? "PROJECT AMENITIES" : "FEATURES & AMENITIES"}
                   </div>
                   <h2>
-                    Thoughtful Details.
-                    <br />
-                    <em>Lasting Value.</em>
+                    {project.isVerified ? (
+                      <>Designed Around <em>Better Living.</em></>
+                    ) : (
+                      <>Thoughtful Details.<br /><em>Lasting Value.</em></>
+                    )}
                   </h2>
                 </div>
                 <p className="reveal">
-                  Explore the features and design considerations that shape the project.
+                  {project.isVerified
+                    ? "Amenities planned for everyday comfort, recreation and peace of mind."
+                    : "Explore the features and design considerations that shape the project."}
                 </p>
               </div>
-              <ul className="pd-feature-grid">
+              <ul
+                className={`pd-feature-grid ${project.features.length % 4 && project.features.length % 3 === 0 ? "cols-3" : ""} ${project.features.length % 2 ? "is-odd" : ""}`}
+              >
                 {project.features.map((feature) => {
                   const Icon = featureIcons[feature.icon];
                   return (
@@ -353,7 +495,9 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
                   );
                 })}
               </ul>
-              <p className="pd-features-note reveal">Illustrative features for presentation.</p>
+              {!project.isVerified && (
+                <p className="pd-features-note reveal">Illustrative features for presentation.</p>
+              )}
             </div>
           </section>
 
@@ -363,10 +507,14 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
                 <div className="section-title reveal">
                   <div className="eyebrow">
                     <span />
-                    LOCATION &amp; CONNECTIVITY
+                    {project.isVerified ? "LOCATION" : "LOCATION & CONNECTIVITY"}
                   </div>
                   <h2>
-                    Discover the <em>Neighborhood.</em>
+                    {project.isVerified ? (
+                      <>A Location Worth <em>Discovering.</em></>
+                    ) : (
+                      <>Discover the <em>Neighborhood.</em></>
+                    )}
                   </h2>
                 </div>
                 <p className="body-copy reveal">
@@ -394,7 +542,8 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
                       rel="noreferrer"
                       className="button golden-button"
                     >
-                      Get Directions <Navigation aria-hidden="true" className="icon" />
+                      {project.isVerified ? "View on Google Maps" : "Get Directions"}{" "}
+                      <Navigation aria-hidden="true" className="icon" />
                     </a>
                   ) : (
                     <>
@@ -417,6 +566,56 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
             </div>
           </section>
 
+          {project.isVerified && project.pricing && (
+            <section className="section re-pricing">
+              <div className="container re-pricing-grid">
+                <div className="re-pricing-copy reveal">
+                  <div className="section-title">
+                    <div className="eyebrow">
+                      <span />
+                      PRICING &amp; APPROVALS
+                    </div>
+                    <h2>
+                      Investment with <em>Confidence.</em>
+                    </h2>
+                  </div>
+                  <p className="re-pricing-disclaimer">
+                    Pricing and availability should be confirmed with the project sales team.
+                  </p>
+                </div>
+                <div className="re-pricing-card reveal">
+                  <span>Starting Price</span>
+                  <strong>{project.pricing.startingPrice}</strong>
+                  <div className="re-approvals">
+                    {project.pricing.approvals.map((approval) => (
+                      <p key={approval}><Check aria-hidden="true" /> {approval}</p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {project.isVerified && (
+            <section className="re-eoi">
+              <div className="container re-eoi-inner reveal">
+                <div>
+                  <span className="contact-kicker">EXPRESSION OF INTEREST</span>
+                  <h2>
+                    Your Next Chapter <em>Starts Here.</em>
+                  </h2>
+                  <p>
+                    Register your interest in {project.name} and receive priority updates on plot
+                    availability, pricing, and project details.
+                  </p>
+                </div>
+                <a href={enquiryHref} className="button golden-button">
+                  {enquiryLabel} <Arrow />
+                </a>
+              </div>
+            </section>
+          )}
+
           <section className="section pd-faq">
             <div className="container pd-faq-grid">
               <div className="pd-faq-intro">
@@ -430,7 +629,10 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
                   </h2>
                 </div>
                 <p className="body-copy reveal">Learn more about the project.</p>
-                <a href="/contacts#enquiry-form" className="text-link reveal">
+                <a
+                  href={enquiryHref}
+                  className="text-link reveal"
+                >
                   Ask Our Team <Arrow />
                 </a>
               </div>
@@ -440,13 +642,21 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
 
           <section id="projects" className="section projects-section">
             <div className="container">
-              <FeaturedProjectsCarousel eyebrow="OUR WORK" initialSlug={project.slug} />
+              <FeaturedProjectsCarousel
+                eyebrow="OUR WORK"
+                initialSlug={suggestedProjects[0]?.slug}
+                projects={suggestedProjects}
+              />
             </div>
           </section>
 
           <section
             className="portfolio-closing pd-closing"
-            style={{ backgroundImage: `url(${closingImage})` }}
+            style={
+              project.isVerified
+                ? { backgroundImage: `url(${project.heroImage})` }
+                : { backgroundImage: `url(${closingImage})` }
+            }
           >
             <div className="portfolio-closing-overlay" />
             <div className="container portfolio-closing-content reveal">
@@ -458,8 +668,11 @@ export default function ProjectDetailPage({ slug }: { slug: string }) {
               </h2>
               <p>Let&apos;s discuss how Ryan Group can bring your next project to life.</p>
               <div className="contact-actions">
-                <a href="/contacts#enquiry-form" className="button golden-button">
-                  Discuss Your Project <Arrow />
+                <a
+                  href={project.isVerified ? enquiryHref : "/contacts#enquiry-form"}
+                  className="button golden-button"
+                >
+                  {project.isVerified ? enquiryLabel : "Discuss Your Project"} <Arrow />
                 </a>
                 <a href="/contacts" className="button button-outline">
                   Contact Ryan Group <Arrow diagonal />
