@@ -8891,5 +8891,7 @@ ol.bd-list li::before {
       rgba(3, 18, 41, 0.74) 46%,
       rgba(3, 18, 41, 0.3) 78%
     ),
-    linear-gradient(0deg, rgba(3, 18, 41, 0.55), transparent 52%);
+    linear-gradient(0deg, rgba(3, 18, 41, 0.55), transparent 52%),
+    /* Keeps the header links legible over bright frames (white interiors, open sky). */
+    linear-gradient(180deg, rgba(3, 18, 41, 0.5), transparent 26%);
 }

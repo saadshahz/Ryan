@@ -37,5 +37,5 @@ export const site = {
    * (10-20 s), around 1280-1920 px wide, H.264 with +faststart, and ideally under 8 MB.
    * While null, the hero shows its still image.
    */
-  heroVideo: null as { src: string; type: string } | null,
+  heroVideo: { src: "/hero_background.mp4", type: "video/mp4" } as { src: string; type: string } | null,
 };
